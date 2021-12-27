@@ -5,6 +5,7 @@ const infoList = document.querySelector('.info-list');
 const filterOption = document.querySelector('.filter-info');
 
 //Event Listeners//
+document.addEventListener('DOMContentLoaded', getInfos);
 infoButton.addEventListener("click", addInfo);
 infoList.addEventListener("click", deleteCheck);
 filterOption.addEventListener("click", filterInfo);
@@ -21,6 +22,8 @@ function addInfo(event) {
     newInfo.innerText = infoInput.value;
     newInfo.classList.add('info-item');
     infoDiv.appendChild(newInfo);
+    //Add info to local storage//
+    saveLocalInfos(infoInput.value);
     //Check button//
     const completedButton = document.createElement('button');
     completedButton.innerHTML = '<i class="fas fa-check-square"></i>'
@@ -44,6 +47,7 @@ function deleteCheck(e) {
         const info = item.parentElement;
         //Animation//
         info.classList.add("fall");
+        removeLocalInfos(todo);
         info.addEventListener('transitionend', function () {
             info.remove();
         });
@@ -80,3 +84,60 @@ function filterInfo(e) {
         }
     });
 }
+
+function saveLocalInfos(info){
+    let infos;
+    if(localStorage.getItem('infos') === null){
+        infos = [];
+    } else {
+        infos = JSON.parse(localStorage.getItem('infos'));
+    }
+    infos.push(info);
+    localStorage.setItem('infos', JSON.stringify(infos));
+}
+
+function getInfos(){
+    console.log("hello");
+
+    let infos;
+    if(localStorage.getItem('infos') === null){
+        infos = [];
+    } else {
+        infos = JSON.parse(localStorage.getItem('infos'));
+    }
+    infos.forEach(function(info){
+        //Info div//
+        const infoDiv = document.createElement("div");
+        infoDiv.classList.add("info");
+        //Create li//
+        const newInfo = document.createElement('li');
+        newInfo.innerText = info;
+        newInfo.classList.add('info-item');
+        infoDiv.appendChild(newInfo);
+        //Check button//
+        const completedButton = document.createElement('button');
+        completedButton.innerHTML = '<i class="fas fa-check-square"></i>'
+        completedButton.classList.add("complete-btn");
+        infoDiv.appendChild(completedButton);
+        //Minus button//
+        const trashButton = document.createElement('button');
+        trashButton.innerHTML = '<i class="fas fa-trash-alt"></i>'
+        trashButton.classList.add("trash-btn");
+        infoDiv.appendChild(trashButton);
+        //Append to list//
+        infoList.appendChild(infoDiv);
+    });
+}
+
+function removeLocalInfos(info){
+    let infos;
+    if(localStorage.getItem('infos') === null){
+        infos = [];
+    } else {
+        infos = JSON.parse(localStorage.getItem('infos'));
+    }
+    const infoIndex = info.children[0].innerText;
+    infos.splice(infos.indexOf(infoIndex), 1);
+    localStorage.setItem('infos', JSON.stringify(infos));
+}
+
