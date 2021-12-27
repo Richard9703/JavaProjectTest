@@ -23,12 +23,12 @@ function addInfo(event) {
     infoDiv.appendChild(newInfo);
     //Check button//
     const completedButton = document.createElement('button');
-    completedButton.innerHTML = '<i class="fa fa-check-square"></i>'
+    completedButton.innerHTML = '<i class="fas fa-check-square"></i>'
     completedButton.classList.add("complete-btn");
     infoDiv.appendChild(completedButton);
     //Minus button//
     const trashButton = document.createElement('button');
-    trashButton.innerHTML = '<i class="fa fa-minus-square"></i>'
+    trashButton.innerHTML = '<i class="fas fa-trash-alt"></i>'
     trashButton.classList.add("trash-btn");
     infoDiv.appendChild(trashButton);
     //Append to list//
@@ -54,23 +54,29 @@ function deleteCheck(e) {
         const info = item.parentElement;
         info.classList.toggle('completed');
     }
-
 }
 
 function filterInfo(e) {
     const infos = infoList.childNodes;
-    infos.forEach(function (info) {
-        switch (e.target.value) {
+    infos.forEach(function(info){
+        switch(e.target.value){
             case "all":
-                info.style.display = 'flex';
+                info.style.display = "flex";
                 break;
             case "completed":
-                if (info.classList.contains('completed')) {
+                if(info.classList.contains('completed')){
                     info.style.display = 'flex';
                 } else {
                     info.style.display = "none";
                 }
+                break;
+            case "uncompleted":
+                if(!info.classList.contains('completed')){
+                    info.style.display = "flex";
+                }else {
+                    info.style.display = "none";
+                }
+                break;
         }
     });
-
 }

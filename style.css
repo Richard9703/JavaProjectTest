@@ -84,7 +84,7 @@ form button.hover {
     padding: 0rem 0.5rem;
 }
 
-.fa-check-square, .fa-check-minus-square {
+.fa-check-square, .fa-trash-alt {
     pointer-events: none;
 }
 
