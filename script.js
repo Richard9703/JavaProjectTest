@@ -47,7 +47,7 @@ function deleteCheck(e) {
         const info = item.parentElement;
         //Animation//
         info.classList.add("fall");
-        removeLocalInfos(todo);
+        removeLocalInfos(info);
         info.addEventListener('transitionend', function () {
             info.remove();
         });
@@ -128,6 +128,7 @@ function getInfos(){
         infoList.appendChild(infoDiv);
     });
 }
+
 
 function removeLocalInfos(info){
     let infos;
